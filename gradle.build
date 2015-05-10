@@ -1,0 +1,10 @@
+tasks.withType(Jar) {
+    compileJava.options.encoding = 'UTF-8'
+}
+
+sourceSets.main {
+    java.srcDirs "src/main/java"
+    resources.srcDirs "src/main/resouces"
+}
+
+version = "0.0.0"
