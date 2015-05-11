@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTSizeTracker;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.io.ByteArrayInputStream;
@@ -361,6 +362,21 @@ public class SasaPacket extends SasaPacketBase
             return ItemStack.loadItemStackFromNBT(getNBTTag());
         }
         return null;
+    }
+
+    public void addBlockPos(BlockPos pos)
+    {
+        addInt(pos.getX());
+        addInt(pos.getY());
+        addInt(pos.getZ());
+    }
+
+    public BlockPos getBlockPos()
+    {
+        int x = getInt();
+        int y = getInt();
+        int z = getInt();
+        return new BlockPos(x, y, z);
     }
 
 }
