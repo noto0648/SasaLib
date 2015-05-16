@@ -19,7 +19,6 @@ public class WorldExporter
 
     public NBTTagCompound toSchematic(BlockPos from, BlockPos to)
     {
-        NBTTagCompound root = new NBTTagCompound();
 
         int minX = Math.min(from.getX(), to.getX());
         int minY = Math.min(from.getY(), to.getY());
@@ -32,13 +31,9 @@ public class WorldExporter
         int height = Math.abs(maxX - minX) + 1;
         int length = Math.abs(maxX - minX) + 1;
 
-        root.setShort("Width", (short)width);
-        root.setShort("Height", (short)width);
-        root.setShort("Length", (short)width);
-        root.setString("Materials", "Alpha");
-
-        byte[] blocks;
-
+        SchematicObject obj = new SchematicObject(width, height, length);
+        obj.write(world.getWorld(), from, to);
+        NBTTagCompound root = obj.saveToNBT();
         return root;
     }
 

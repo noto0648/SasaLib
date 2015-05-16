@@ -108,6 +108,7 @@ public class SchematicObject
         tag.setTag("TileEntities", tileEntities);
         return tag;
     }
+    
     private int toIndex(int x, int y, int z)
     {
         return x + (z * width) + (y * length * width);

@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import net.minecraft.world.border.WorldBorder;
@@ -108,8 +109,15 @@ public class WorldHelper extends BlockAccessHelper
 
     public boolean setMetadata(BlockPos pos, int metadata, int flags)
     {
+        TileEntity te = getTileEntity(pos);
         IBlockState state = getBlock(pos).getStateFromMeta(metadata);
         boolean result = setBlockState(pos, state, flags);
+        result = setBlockState(pos, state, flags);
+
+        if(te != null)
+            te.validate();
+        world.setTileEntity(pos, te);
+
         return result && getMetadata(pos) == metadata;
     }
 
@@ -138,6 +146,7 @@ public class WorldHelper extends BlockAccessHelper
         return setMetadata(toPos(x, y, z), metadata, getFlagValue(flags));
     }
 
+    @Deprecated
     public boolean setBlockAndMetadata(BlockPos pos, Block block,int metadata, int flags)
     {
         IBlockState state = block.getStateFromMeta(metadata);
@@ -145,26 +154,31 @@ public class WorldHelper extends BlockAccessHelper
         return result && getMetadata(pos) == metadata;
     }
 
+    @Deprecated
     public boolean setBlockAndMetadata(int x, int y, int z, Block block,int metadata, int flags)
     {
         return setBlockAndMetadata(toPos(x, y, z), block, metadata, flags);
     }
 
+    @Deprecated
     public boolean setBlockAndMetadata(BlockPos pos, Block block, int metadata)
     {
         return setBlockAndMetadata(pos, block, metadata, 3);
     }
 
+    @Deprecated
     public boolean setBlockAndMetadata(int x, int y, int z, Block block, int metadata)
     {
         return setBlockAndMetadata(toPos(x, y, z), block, metadata, 3);
     }
 
+    @Deprecated
     public boolean setBlockAndMetadata(BlockPos pos, Block block, int metadata, EnumWorldFlag... flags)
     {
         return setBlockAndMetadata(pos, block, metadata, getFlagValue(flags));
     }
 
+    @Deprecated
     public boolean setBlockAndMetadata(int x, int y, int z, Block block, int metadata, EnumWorldFlag... flags)
     {
         return setBlockAndMetadata(toPos(x, y, z), block, metadata, getFlagValue(flags));

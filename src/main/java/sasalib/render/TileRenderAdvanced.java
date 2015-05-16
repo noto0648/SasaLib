@@ -12,6 +12,7 @@ import java.util.List;
  * Created by Noto on 2015/05/09.
  */
 @SideOnly(Side.CLIENT)
+
 public class TileRenderAdvanced
 {
     public static final TileRenderAdvanced INSTANCE = new TileRenderAdvanced();

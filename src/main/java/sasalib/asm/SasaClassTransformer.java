@@ -1,7 +1,7 @@
 package sasalib.asm;
 
-
 import net.minecraft.launchwrapper.IClassTransformer;
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
@@ -15,18 +15,14 @@ import sasalib.SasaLib;
  */
 public class SasaClassTransformer implements IClassTransformer, Opcodes
 {
-    private static final String TARGET_CLASS_NAME = "net.minecraft.client.renderer.BlockRendererDispatcher";
     private static final String TARGET_CLASS_NAME2 = "net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer";
 
-    public SasaClassTransformer()
-    {
-
-    }
+    public SasaClassTransformer() {}
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] bytes)
     {
-        if (transformedName.equals(TARGET_CLASS_NAME2))
+        if (FMLLaunchHandler.side().isClient() && transformedName.equals(TARGET_CLASS_NAME2))
         {
             return transFormMethod(bytes);
         }
@@ -39,10 +35,6 @@ public class SasaClassTransformer implements IClassTransformer, Opcodes
         ClassReader reader = new ClassReader(bytes);
         reader.accept(cnode, 0);
 
-        /*
-        String targetMethodName = "renderBlockBrightness";
-        String targetMethoddesc = "(Lnet/minecraft/block/state/IBlockState;F)V";
-*/
         String targetMethodName = "renderByItem";
         String targetMethoddesc = "(Lnet/minecraft/item/ItemStack;)V";
 
