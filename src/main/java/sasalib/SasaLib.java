@@ -1,5 +1,6 @@
 package sasalib;
 
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -11,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import sasalib.event.SasaLibLoadEvent;
 import sasalib.event.SasaLibPreLoadEvent;
 import sasalib.gui.SasaGuiHandler;
+import sasalib.model.SimpleIconLoader;
 import sasalib.packet.PacketDispatcher;
 import sasalib.registry.RegistryManager;
 
@@ -40,6 +42,7 @@ public class SasaLib
     {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new SasaGuiHandler());
         MinecraftForge.EVENT_BUS.post(new SasaLibLoadEvent(this));
+        proxy.load(event);
     }
 
     @Mod.EventHandler
@@ -47,6 +50,7 @@ public class SasaLib
     {
         registerEvent();
         MinecraftForge.EVENT_BUS.post(new SasaLibPreLoadEvent(this));
+        proxy.preLoad(event);
     }
 
 }
